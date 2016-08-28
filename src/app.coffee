@@ -2,10 +2,10 @@ express = require 'express'
 bodyParser = require 'body-parser'
 exec = require('child_process').exec
 
-{REGION, CLUSTER, SERVICE, CONTAINER} = process.env
+{REGION, CLUSTER, SERVICE, CONTAINER, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY} = process.env
 
-if not REGION or not CLUSTER or not SERVICE or not CONTAINER
-  console.log "One of the variables REGION, CLUSTER, SERVICE, CONTAINER, IMAGE is not defined"
+if not REGION or not CLUSTER or not SERVICE or not CONTAINER or not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY
+  console.log "One of the variables REGION, CLUSTER, SERVICE, CONTAINER, AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY is not defined"
   process.exit 1
 
 ecsDeploy = (image, tag) ->
