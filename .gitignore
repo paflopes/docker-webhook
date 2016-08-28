@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+.cache
+.gitignore
+.idea/
+build/
+docker-webhook.iml
+node_modules/
