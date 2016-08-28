@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "gulp compile && node build/app.js"
+    "start": "coffee build/app.js"
   },
   "dependencies": {
     "bluebird": "^3.4.3",
