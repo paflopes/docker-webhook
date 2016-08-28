@@ -5,15 +5,25 @@ nodemon = require 'gulp-nodemon'
 gutil = require 'gulp-util'
 del = require 'del'
 cache = require("gulp-cache-money")
-  cacheFile: __dirname + "/.cache"
+  cacheFile: "#{__dirname}/.cache"
 
-gulp.task 'compile-coffee', () ->
+process.on 'SIGINT', ->
+  setTimeout ->
+    gutil.log gutil.colors.red('Successfully closed ' + process.pid)
+    process.exit 1
+  , 500
+
+
+gulp.task 'coffee:compile', () ->
   gulp.src('./src/**/*.coffee')
   .pipe(cache())
   .pipe(sourcemaps.init())
-  .pipe(coffee({bare: true})).on('error', gutil.log)
+  .pipe(coffee({bare: true}))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest('./build'))
+
+gulp.task 'coffee:watch', ['coffee:compile'], () ->
+  gulp.watch('./src/**/*.coffee', ['coffee:compile'])
 
 gulp.task 'clean', () ->
   del [
@@ -21,9 +31,9 @@ gulp.task 'clean', () ->
     '.cache'
   ]
 
-gulp.task 'watch-coffee', ['compile-coffee'], () ->
+gulp.task 'run:dev', ['coffee:compile'], () ->
   nodemon
     script: 'build/app.js'
     ext: 'coffee'
     watch: './src'
-    tasks: ['compile-coffee']
+    tasks: ['coffee:compile']

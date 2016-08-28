@@ -6,8 +6,11 @@ app = express()
 app.use(bodyParser.json())
 
 app.post '/docker/hub/webhook', (req, res) =>
-  console.log 'Received the following'
-  console.log "#{JSON.stringify(req.body, null, 2)}"
+  console.log """
+              Received the following JSON:
+
+              #{JSON.stringify(req.body, null, 2)}
+              """
 
   res.send JSON.stringify(req.body, null, 2)
 
